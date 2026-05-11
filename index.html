@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lenticular Image Splicer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="layout">
+    <section class="canvas-panel">
+      <div class="canvas-frame">
+        <canvas id="canvas"></canvas>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <h1>Lenticular Image Splicer</h1>
+
+      <label class="upload">
+        <span>Image A</span>
+        <input type="file" id="image1" accept="image/*">
+        <img id="preview1">
+      </label>
+
+      <label class="upload">
+        <span>Image B</span>
+        <input type="file" id="image2" accept="image/*">
+        <img id="preview2">
+      </label>
+
+      <div class="control-group">
+        <div class="row">
+          <span>Strip Width</span>
+          <span id="stripValue">8 px</span>
+        </div>
+
+        <input
+          type="range"
+          id="stripWidth"
+          min="1"
+          value="8"
+        >
+      </div>
+
+      <button id="download" disabled>Download</button>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
