@@ -16,42 +16,224 @@
 </head>
 <body>
   <main class="layout">
+
+    <!-- ── Canvas ── -->
     <section class="canvas-panel">
-      <div class="canvas-frame">
+      <div class="canvas-frame" id="canvasFrame">
+        <div class="canvas-empty" id="canvasEmpty">
+          <span class="empty-icon">↑</span>
+          <span id="emptyLabel">Upload two images to get started</span>
+          <input type="file" id="canvasUpload" accept="image/*">
+        </div>
         <canvas id="canvas"></canvas>
+        <canvas id="pathCanvas"></canvas>
       </div>
     </section>
 
+    <!-- ── Sidebar ── -->
     <aside class="sidebar">
-      <h1>Lenticular Image Splicer</h1>
 
-      <label class="upload">
-        <span>Image A</span>
-        <input type="file" id="image1" accept="image/*">
-        <img id="preview1">
-      </label>
-
-      <label class="upload">
-        <span>Image B</span>
-        <input type="file" id="image2" accept="image/*">
-        <img id="preview2">
-      </label>
-
-      <div class="control-group">
-        <div class="row">
-          <span>Strip Width</span>
-          <span id="stripValue">8 px</span>
+      <div class="sidebar-head">
+        <h1>Lenticular<br>Image Splicer</h1>
+        <!-- Mode tabs -->
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-mode="splice">Splice</button>
+          <button class="mode-tab" data-mode="effects">Effects</button>
         </div>
-
-        <input
-          type="range"
-          id="stripWidth"
-          min="1"
-          value="8"
-        >
       </div>
 
-      <button id="download" disabled>Download</button>
+      <!-- ══ SPLICE PANEL ══ -->
+      <div id="splicePanel">
+
+        <div class="section-block open">
+          <button class="section-header" data-section>
+            <span class="section-title">Images</span>
+            <span class="chevron">›</span>
+          </button>
+          <div class="section-body">
+            <label class="upload">
+              <span>Image A</span>
+              <input type="file" id="image1" accept="image/*">
+              <img id="preview1">
+            </label>
+            <label class="upload">
+              <span>Image B</span>
+              <input type="file" id="image2" accept="image/*">
+              <img id="preview2">
+            </label>
+          </div>
+        </div>
+
+        <div class="section-block open">
+          <button class="section-header" data-section>
+            <span class="section-title">Strip Width</span>
+            <span class="chevron">›</span>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Width</span><span id="stripValue" class="val">8 px</span></div>
+              <input type="range" id="stripWidth" min="1" max="200" value="8">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ EFFECTS PANEL ══ -->
+      <div id="effectsPanel" hidden>
+
+        <div class="section-block open">
+          <button class="section-header" data-section>
+            <span class="section-title">Image</span>
+            <span class="chevron">›</span>
+          </button>
+          <div class="section-body">
+            <label class="upload">
+              <span>Source Image</span>
+              <input type="file" id="imageE" accept="image/*">
+              <img id="previewE">
+            </label>
+          </div>
+        </div>
+
+        <!-- Glass -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Glass Slices</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="glassEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Slice Width</span><span id="glassSliceVal" class="val">40 px</span></div>
+              <input type="range" id="glassSliceWidth" min="4" max="200" value="40">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Refraction</span><span id="glassRefractionVal" class="val">18</span></div>
+              <input type="range" id="glassRefraction" min="0" max="80" value="18">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Blur per Slice</span><span id="glassBlurVal" class="val">3</span></div>
+              <input type="range" id="glassBlur" min="0" max="20" value="3">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Highlight</span><span id="glassHighlightVal" class="val">60</span></div>
+              <input type="range" id="glassHighlight" min="0" max="255" value="60">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Opacity</span><span id="glassOpacityVal" class="val">80%</span></div>
+              <input type="range" id="glassOpacity" min="0" max="100" value="80">
+            </div>
+          </div>
+        </div>
+
+        <!-- Chromatic Aberration -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Chromatic Aberration</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="caEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Shift Amount</span><span id="caAmountVal" class="val">6 px</span></div>
+              <input type="range" id="caAmount" min="0" max="40" value="6">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Angle</span><span id="caAngleVal" class="val">0°</span></div>
+              <input type="range" id="caAngle" min="0" max="360" value="0">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Green Shift</span><span id="caGreenVal" class="val">0 px</span></div>
+              <input type="range" id="caGreen" min="-20" max="20" value="0">
+            </div>
+          </div>
+        </div>
+
+        <!-- Path Blur -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Path Blur</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="pathBlurEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <p class="hint">Enable, then draw on the canvas. <kbd>⌘Z</kbd> / <kbd>Ctrl Z</kbd> to undo.</p>
+            <div class="control-group">
+              <div class="row"><span>Blur Length</span><span id="pathBlurStrVal" class="val">8</span></div>
+              <input type="range" id="pathBlurStr" min="1" max="30" value="8">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Falloff Radius</span><span id="pathRadiusVal" class="val">60 px</span></div>
+              <input type="range" id="pathRadius" min="10" max="300" value="60">
+            </div>
+            <button id="clearPath" class="secondary">Clear Path</button>
+          </div>
+        </div>
+
+        <!-- Noise -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Noise &amp; Grain</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="noiseEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Type</span></div>
+              <div class="chip-group" id="noiseType">
+                <button class="chip active" data-val="film">Film</button>
+                <button class="chip" data-val="rgb">RGB</button>
+                <button class="chip" data-val="scanline">Scanline</button>
+                <button class="chip" data-val="dust">Dust</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Intensity</span><span id="noiseIntVal" class="val">40</span></div>
+              <input type="range" id="noiseIntensity" min="0" max="255" value="40">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Grain Size</span><span id="noiseSizeVal" class="val">1</span></div>
+              <input type="range" id="noiseSize" min="1" max="6" value="1">
+            </div>
+            <div class="control-group" id="scanlineSpacingGroup" style="display:none">
+              <div class="row"><span>Line Spacing</span><span id="scanlineSpacingVal" class="val">4 px</span></div>
+              <input type="range" id="scanlineSpacing" min="2" max="20" value="4">
+            </div>
+            <div class="control-group" id="scanlineWidthGroup" style="display:none">
+              <div class="row"><span>Line Width</span><span id="scanlineWidthVal" class="val">1 px</span></div>
+              <input type="range" id="scanlineWidth" min="1" max="10" value="1">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /effectsPanel -->
+
+      <div class="sidebar-foot">
+        <button id="download" disabled>Download</button>
+      </div>
+
     </aside>
   </main>
 
