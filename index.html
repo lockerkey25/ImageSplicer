@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lenticular Image Splicer</title>
+  <title>Cool Image Effects :)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,10 +34,10 @@
     <aside class="sidebar">
 
       <div class="sidebar-head">
-        <h1>Lenticular<br>Image Splicer</h1>
+        <h1>Cool Image Effects :)</h1>
         <!-- Mode tabs -->
         <div class="mode-tabs">
-          <button class="mode-tab active" data-mode="splice">Splice</button>
+          <button class="mode-tab active" data-mode="splice">Collage</button>
           <button class="mode-tab" data-mode="effects">Effects</button>
         </div>
       </div>
@@ -47,10 +47,11 @@
 
         <div class="section-block open">
           <button class="section-header" data-section>
-            <span class="section-title">Images</span>
+            <span class="section-title">Lenticular Image Effect</span>
             <span class="chevron">›</span>
           </button>
           <div class="section-body">
+            <p class="hint" style="margin-bottom:0.8rem">Upload two simages and interleave them together into vertical strips to create the lenticular / slit-scan effect.</p>
             <label class="upload">
               <span>Image A</span>
               <input type="file" id="image1" accept="image/*">
@@ -61,17 +62,8 @@
               <input type="file" id="image2" accept="image/*">
               <img id="preview2">
             </label>
-          </div>
-        </div>
-
-        <div class="section-block open">
-          <button class="section-header" data-section>
-            <span class="section-title">Strip Width</span>
-            <span class="chevron">›</span>
-          </button>
-          <div class="section-body">
-            <div class="control-group">
-              <div class="row"><span>Width</span><span id="stripValue" class="val">8 px</span></div>
+            <div class="control-group" style="margin-top:0.8rem">
+              <div class="row"><span>Strip Width</span><span id="stripValue" class="val">8 px</span></div>
               <input type="range" id="stripWidth" min="1" max="200" value="8">
             </div>
           </div>
@@ -189,7 +181,7 @@
         <!-- Noise -->
         <div class="section-block">
           <button class="section-header" data-section>
-            <span class="section-title">Noise &amp; Grain</span>
+            <span class="section-title">Noise + Grain</span>
             <div class="header-right">
               <label class="toggle-wrap" onclick="event.stopPropagation()">
                 <input type="checkbox" id="noiseEnabled">
@@ -208,6 +200,13 @@
                 <button class="chip" data-val="dust">Dust</button>
               </div>
             </div>
+            <div class="control-group" id="noiseColorGroup">
+              <div class="row"><span>Color</span></div>
+              <div class="chip-group" id="noiseColor">
+                <button class="chip active" data-val="mono">Mono</button>
+                <button class="chip" data-val="color">Color</button>
+              </div>
+            </div>
             <div class="control-group">
               <div class="row"><span>Intensity</span><span id="noiseIntVal" class="val">40</span></div>
               <input type="range" id="noiseIntensity" min="0" max="255" value="40">
@@ -223,6 +222,142 @@
             <div class="control-group" id="scanlineWidthGroup" style="display:none">
               <div class="row"><span>Line Width</span><span id="scanlineWidthVal" class="val">1 px</span></div>
               <input type="range" id="scanlineWidth" min="1" max="10" value="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- Gradient Map -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Gradient Map</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="gradientEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Preset</span></div>
+              <div class="chip-group" id="gradientPreset">
+                <button class="chip active" data-val="bw">B&amp;W</button>
+                <button class="chip" data-val="sunset">Sunset</button>
+                <button class="chip" data-val="ocean">Ocean</button>
+                <button class="chip" data-val="neon">Neon</button>
+                <button class="chip" data-val="duotone">Duotone</button>
+                <button class="chip" data-val="gold">Gold</button>
+              </div>
+            </div>
+            <canvas id="gradientBar" height="20"></canvas>
+            <div id="gradientStops" class="gradient-stops-row"></div>
+            <div class="gradient-stop-actions">
+              <button class="secondary" id="gradientAddStop">Add Stop</button>
+              <button class="secondary" id="gradientRemoveStop">Remove Stop</button>
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Opacity</span><span id="gradientOpacityVal" class="val">100</span></div>
+              <input type="range" id="gradientOpacity" min="0" max="100" value="100">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Blend Mode</span></div>
+              <div class="chip-group" id="gradientBlend">
+                <button class="chip active" data-val="normal">Normal</button>
+                <button class="chip" data-val="multiply">Multiply</button>
+                <button class="chip" data-val="screen">Screen</button>
+                <button class="chip" data-val="overlay">Overlay</button>
+                <button class="chip" data-val="color">Color</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Halftone -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">Halftone</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="halftoneEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Type</span></div>
+              <div class="chip-group" id="halftoneType">
+                <button class="chip active" data-val="dots">Dots</button>
+                <button class="chip" data-val="lines">Lines</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Cell Size</span><span id="halftoneSizeVal" class="val">10</span></div>
+              <input type="range" id="halftoneSize" min="4" max="40" value="10">
+            </div>
+            <div class="control-group" id="halftoneAngleGroup">
+              <div class="row"><span>Angle</span><span id="halftoneAngleVal" class="val">45°</span></div>
+              <input type="range" id="halftoneAngle" min="0" max="180" value="45">
+            </div>
+            <div class="color-row">
+              <label for="halftoneFg">Ink</label>
+              <input type="color" id="halftoneFg" value="#000000">
+            </div>
+            <div class="color-row">
+              <label for="halftoneBg">Paper</label>
+              <input type="color" id="halftoneBg" value="#ffffff">
+            </div>
+            <div class="control-group">
+              <label class="toggle-wrap" style="gap:0.5rem">
+                <input type="checkbox" id="halftoneInvert">
+                <span class="toggle"></span>
+                <span style="font-size:0.8rem;color:var(--muted)">Invert</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASCII -->
+        <div class="section-block">
+          <button class="section-header" data-section>
+            <span class="section-title">ASCII</span>
+            <div class="header-right">
+              <label class="toggle-wrap" onclick="event.stopPropagation()">
+                <input type="checkbox" id="asciiEnabled">
+                <span class="toggle"></span>
+              </label>
+              <span class="chevron">›</span>
+            </div>
+          </button>
+          <div class="section-body">
+            <div class="control-group">
+              <div class="row"><span>Cell Size</span><span id="asciiSizeVal" class="val">8 px</span></div>
+              <input type="range" id="asciiSize" min="4" max="32" value="8">
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Color</span></div>
+              <div class="chip-group" id="asciiColor">
+                <button class="chip active" data-val="mono">Mono</button>
+                <button class="chip" data-val="color">Color</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Background</span></div>
+              <div class="chip-group" id="asciiBg">
+                <button class="chip active" data-val="black">Black</button>
+                <button class="chip" data-val="white">White</button>
+                <button class="chip" data-val="transparent">None</button>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="row"><span>Charset</span></div>
+              <div class="chip-group" id="asciiCharset">
+                <button class="chip active" data-val="standard">Standard</button>
+                <button class="chip" data-val="blocks">Blocks</button>
+                <button class="chip" data-val="minimal">Minimal</button>
+              </div>
             </div>
           </div>
         </div>

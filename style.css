@@ -122,11 +122,12 @@ html, body {
 
 h1 {
   font-family: 'Fraunces', serif;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.03em;
   margin-bottom: 1rem;
+  white-space: nowrap;
 }
 
 /* ── Mode tabs ───────────────────────────────── */
@@ -453,4 +454,84 @@ button.secondary:hover { background: var(--bg); color: var(--text); }
     height: auto;
     max-height: none;
   }
+}
+
+/* ── Gradient map ────────────────────────────── */
+#gradientBar {
+  width: 100%;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  display: block;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.gradient-stops-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+  align-items: flex-end;
+}
+
+.gradient-stop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+
+.gradient-stop-swatch {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color 0.12s;
+}
+
+.gradient-stop-swatch:hover {
+  border-color: var(--accent);
+}
+
+.gradient-stop-pos {
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.gradient-stop-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.gradient-stop-actions button {
+  flex: 1;
+}
+
+/* ── Color pickers inline ────────────────────── */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;
+}
+
+.color-row label {
+  flex: 1;
+  color: var(--muted);
+}
+
+.color-row input[type='color'] {
+  width: 32px;
+  height: 22px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px;
+  cursor: pointer;
+  background: none;
 }
